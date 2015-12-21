@@ -49,6 +49,10 @@ public class PriorityQueue<T extends Comparable<T>> {
 		return ret;
 	}
 	
+	public boolean isEmpty(){
+		return size() == 0;
+	}
+	
 	private int parent(int index){
 		return index >> 1;
 	}
