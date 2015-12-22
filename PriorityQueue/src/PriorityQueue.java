@@ -112,7 +112,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 	}
 	
 	private void resize(int newSize){
-		if(newSize <= size+1) return;
+		if(newSize < size+1) return;
 		Object[] aux = new Object[newSize];
 		for(int i=1; i<=size; i++)
 			aux[i] = heap[i];
