@@ -3,7 +3,7 @@ import java.util.LinkedList;
 @SuppressWarnings("unchecked")
 public class BinarySearchTree<K extends Comparable<K>, V> extends OrderedSymbolTable<K, V> {
 	
-	private Node root;
+	protected Node root;
 	
 	private Node floorNode(K key){
 		if(key == null) return null;
@@ -21,7 +21,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> extends OrderedSymbolT
 		return floor;
 	}
 	
-	private Node getNode(K key){
+	protected Node getNode(K key){
 		Node node = floorNode(key);
 		if(node != null && key.compareTo((K)node.key) == 0)
 			return node;
@@ -238,6 +238,19 @@ public class BinarySearchTree<K extends Comparable<K>, V> extends OrderedSymbolT
 		return keys;
 	}
 	
+	private String toString(int depth, Node node){
+		if(node == null) return "";
+		String blank = "";
+		for(int i=0; i<depth; i++)
+			blank += "    ";
+		return "\n"+blank+node+toString(depth+1, node.left)+toString(depth+1, node.right);
+	}
+	
+	@Override
+	public String toString(){
+		return "\n{"+toString(0, root)+"\n}";
+	}
+	
 	public static class Node{
 		public Object key;
 		public Object value;
@@ -249,6 +262,11 @@ public class BinarySearchTree<K extends Comparable<K>, V> extends OrderedSymbolT
 			this.key = key;
 			this.value = value;
 			this.size = size;
+		}
+		
+		@Override
+		public String toString(){
+			return key+"="+value;
 		}
 	}
 

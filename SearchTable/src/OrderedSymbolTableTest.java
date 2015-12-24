@@ -60,6 +60,18 @@ protected abstract OrderedSymbolTable<Integer, Integer> getTable();
 				assertEquals(sortedArray[index++], key.intValue());
 			assertEquals(index-indexLo, table.size(lo, hi));
 		}
+		index = 0;
+		for(Integer key: table.keys()){
+			assertEquals(map.remove(key), table.remove(key));
+			if(++index == 500000) break;
+		}
+		for(Integer key: map.keySet()){
+			assertTrue(table.contains(key));
+			assertEquals(map.get(key), table.get(key));
+		}
+		for(Integer key: table.keys())
+			assertTrue(map.containsKey(key));
+		assertEquals(table.size(), map.size());
 		for(Integer key: map.keySet()){
 			assertEquals(map.get(key), table.remove(key));
 		}
