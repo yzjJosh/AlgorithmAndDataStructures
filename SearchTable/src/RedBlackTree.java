@@ -166,9 +166,8 @@ public class RedBlackTree<K extends Comparable<K>, V> extends BinarySearchTree<K
 	
 	@Override
 	public V remove(K key){
-		Node node = getNode(key);
-		if(node == null) return null;
-		V ret = (V)node.value;
+		if(!contains(key)) return null;
+		V ret = get(key);
 		setColor(root, RedBlackNode.RED);
 		root = remove(root, key);
 		if(isRed(root))

@@ -21,7 +21,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> extends OrderedSymbolT
 		return floor;
 	}
 	
-	protected Node getNode(K key){
+	private Node getNode(K key){
 		Node node = floorNode(key);
 		if(node != null && key.compareTo((K)node.key) == 0)
 			return node;
@@ -223,18 +223,29 @@ public class BinarySearchTree<K extends Comparable<K>, V> extends OrderedSymbolT
 	public int size() {
 		return size(root);
 	}
-	
-	private void collectKeys(Node node, LinkedList<K> keys){
-		if(node == null) return;
-		collectKeys(node.left, keys);
-		keys.add((K)node.key);
-		collectKeys(node.right, keys);
-	}
 
 	@Override
 	public Iterable<K> keys() {
 		LinkedList<K> keys = new LinkedList<K>();
-		collectKeys(root, keys);
+		Node node = root;
+		while(node != null){
+			if(node.left == null){
+				keys.add((K)node.key);
+				node = node.right;
+			}else{
+				Node temp = node.left;
+				while(temp.right != null && temp.right != node)
+					temp = temp.right;
+				if(temp.right == node){
+					keys.add((K)node.key);
+					temp.right = null;
+					node = node.right;
+				}else{
+					temp.right = node;
+					node = node.left;
+				}
+			}
+		}
 		return keys;
 	}
 	

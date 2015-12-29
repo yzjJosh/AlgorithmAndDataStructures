@@ -35,8 +35,11 @@ protected abstract OrderedSymbolTable<Integer, Integer> getTable();
 			assertTrue(table.contains(key));
 			assertEquals(map.get(key), table.get(key));
 		}
-		for(Integer key: table.keys())
+		index = 0;
+		for(Integer key: table.keys()){
 			assertTrue(map.containsKey(key));
+			assertEquals(key.intValue(), sortedArray[index++]);
+		}
 		for(int i=0; i<10000; i++){
 			int key = (int)(Math.random()*Integer.MAX_VALUE);
 			assertEquals(map.floorKey(key), table.floor(key));
