@@ -175,7 +175,7 @@ public class SplayTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V
 			setValueNode.key = node.key;
 			setValueNode.value = node.value;
 			nodeToSplay = parent(node);
-			return null;
+			return node.right;
 		}else{
 			node.left = removeMin(setValueNode, node.left, key);
 			setParent(node.left, node);

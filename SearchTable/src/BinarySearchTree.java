@@ -177,7 +177,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> extends OrderedSymbolT
 		if(node.left == null) {
 			setValueNode.key = node.key;
 			setValueNode.value = node.value;
-			return null;
+			return node.right;
 		}
 		node.left = removeMin(setValueNode, node.left);
 		node.size = size(node.left) + size(node.right) + 1;
@@ -253,7 +253,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> extends OrderedSymbolT
 		if(node == null) return "";
 		String blank = "";
 		for(int i=0; i<depth; i++)
-			blank += "    ";
+			blank += "    |";
 		return "\n"+blank+node+toString(depth+1, node.left)+toString(depth+1, node.right);
 	}
 	

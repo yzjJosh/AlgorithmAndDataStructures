@@ -130,7 +130,7 @@ public class RedBlackTree<K extends Comparable<K>, V> extends BinarySearchTree<K
 		if(node.left == null) {
 			setValueNode.key = node.key;
 			setValueNode.value = node.value;
-			return null;
+			return node.right;
 		}
 		if(isBlack(node.left) && !isRed(node.left.left))
 			node = moveRedToLeft(node);
