@@ -1,14 +1,12 @@
 
-public abstract class Search {
+public interface Search {
 	
-	public Search(Graph<?> graph, int v){}
+	public boolean isConnected(int w);
 	
-	public abstract boolean isConnected(int w);
+	public int connectedCount();
 	
-	public abstract int connectedCount();
+	public Iterable<Integer> connectedVertices();
 	
-	public abstract Iterable<Integer> connectedVertices();
-	
-	public abstract Iterable<Integer> pathTo(int w);
+	public Iterable<Integer> pathTo(int w);
 	
 }

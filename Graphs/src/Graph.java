@@ -9,4 +9,5 @@ public interface Graph<E extends Edge> {
 	
 	public Iterable<E> adj(int v);
 	
+	public Iterable<E> edges();
 }

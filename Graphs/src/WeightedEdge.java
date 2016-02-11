@@ -8,6 +8,11 @@ public class WeightedEdge extends Edge implements Comparable<WeightedEdge>{
 		super(v, w);
 		this.weight = weight;
 	}
+	
+	@Override
+	public Edge revert(){
+		return new WeightedEdge(w, v, weight);
+	}
 
 	@Override
 	public int compareTo(WeightedEdge o) {

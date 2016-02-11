@@ -2,15 +2,14 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Stack;
 
-public class BreathFirstSearch extends Search {
+public class BreathFirstSearch implements Search {
 
-	private int[] edgeTo;
-	private int v;
+	private final int[] edgeTo;
+	private final int v;
 	private int connectedCount;
-	private LinkedList<Integer> connectedVertices;
+	private final LinkedList<Integer> connectedVertices;
 	
 	public BreathFirstSearch(Graph<?> graph, int v) {
-		super(graph, v);
 		if(graph == null)
 			throw new NullPointerException();
 		if(v >= graph.V() || v < 0)
@@ -60,12 +59,9 @@ public class BreathFirstSearch extends Search {
 			throw new IndexOutOfBoundsException(w+"");
 		LinkedList<Integer> ret = new LinkedList<Integer>();
 		if(!isConnected(w)) return ret;
-		Stack<Integer> path = new Stack<Integer>();
-		path.push(w);
+		ret.addFirst(w);
 		while(w != v)
-			path.push(w = edgeTo[w]);
-		while(!path.isEmpty())
-			ret.add(path.pop());
+			ret.addFirst(w = edgeTo[w]);
 		return ret;
 	}
 

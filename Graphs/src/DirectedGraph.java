@@ -3,14 +3,14 @@ import java.util.LinkedList;
 public class DirectedGraph<E extends Edge> implements Graph<E> {
 	
 	private LinkedList<Edge>[] adjList;
-	private int E;
+	private LinkedList<Edge> edges;
 	
 	@SuppressWarnings("unchecked")
 	public DirectedGraph(int V){
 		if(V <= 0) 
 			throw new IllegalArgumentException(V+"");
-		E = 0;
 		adjList = (LinkedList<Edge>[])new LinkedList[V];
+		edges = new LinkedList<Edge>();
 		for(int i=0; i<V; i++)
 			adjList[i] = new LinkedList<Edge>();
 	}
@@ -22,7 +22,7 @@ public class DirectedGraph<E extends Edge> implements Graph<E> {
 
 	@Override
 	public int E() {
-		return E;
+		return edges.size();
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class DirectedGraph<E extends Edge> implements Graph<E> {
 		if(e.w >= V() || e.w < 0)
 			throw new IndexOutOfBoundsException(e.w+"");
 		adjList[e.v].add(e);
-		E ++;
+		edges.add(e);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -42,6 +42,12 @@ public class DirectedGraph<E extends Edge> implements Graph<E> {
 		if(v >= V() || v < 0)
 			throw new IndexOutOfBoundsException(v+"");
 		return (Iterable<E>)adjList[v].clone();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Iterable<E> edges() {
+		return (Iterable<E>) edges.clone();
 	}
 	
 	@Override

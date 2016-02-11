@@ -2,7 +2,7 @@ import java.util.*;
 
 public class CircleFinder {
 	
-	private LinkedList<Integer> circle;
+	private final LinkedList<Integer> circle;
 	
 	public CircleFinder(DirectedGraph<?> graph){
 		if(graph == null)
