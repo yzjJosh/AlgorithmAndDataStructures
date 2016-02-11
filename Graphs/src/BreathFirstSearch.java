@@ -9,7 +9,7 @@ public class BreathFirstSearch extends Search {
 	private int connectedCount;
 	private LinkedList<Integer> connectedVertices;
 	
-	public BreathFirstSearch(Graph graph, int v) {
+	public BreathFirstSearch(Graph<?> graph, int v) {
 		super(graph, v);
 		if(graph == null)
 			throw new NullPointerException();
@@ -27,10 +27,10 @@ public class BreathFirstSearch extends Search {
 			int w = queue.pollFirst();
 			connectedCount ++;
 			connectedVertices.add(w);
-			for(int next: graph.adj(w)){
-				if(edgeTo[next] != -1) continue;
-				edgeTo[next] = w;
-				queue.add(next);
+			for(Edge e: graph.adj(w)){
+				if(edgeTo[e.w] != -1) continue;
+				edgeTo[e.w] = w;
+				queue.add(e.w);
 			}
 		}
 	}

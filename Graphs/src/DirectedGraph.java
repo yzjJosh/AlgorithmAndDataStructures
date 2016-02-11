@@ -1,8 +1,8 @@
 import java.util.LinkedList;
 
-public class DirectedGraph implements Graph {
+public class DirectedGraph<E extends Edge> implements Graph<E> {
 	
-	private LinkedList<Integer>[] adjList;
+	private LinkedList<Edge>[] adjList;
 	private int E;
 	
 	@SuppressWarnings("unchecked")
@@ -10,9 +10,9 @@ public class DirectedGraph implements Graph {
 		if(V <= 0) 
 			throw new IllegalArgumentException(V+"");
 		E = 0;
-		adjList = (LinkedList<Integer>[])new LinkedList[V];
+		adjList = (LinkedList<Edge>[])new LinkedList[V];
 		for(int i=0; i<V; i++)
-			adjList[i] = new LinkedList<Integer>();
+			adjList[i] = new LinkedList<Edge>();
 	}
 
 	@Override
@@ -26,20 +26,22 @@ public class DirectedGraph implements Graph {
 	}
 
 	@Override
-	public void addEdge(int v, int w) {
-		if(v >= V() || v < 0)
-			throw new IndexOutOfBoundsException(v+"");
-		if(w >= V() || w < 0)
-			throw new IndexOutOfBoundsException(w+"");
-		adjList[v].add(w);
+	public void addEdge(E e) {
+		if(e == null) throw  new NullPointerException();
+		if(e.v >= V() || e.v < 0)
+			throw new IndexOutOfBoundsException(e.v+"");
+		if(e.w >= V() || e.w < 0)
+			throw new IndexOutOfBoundsException(e.w+"");
+		adjList[e.v].add(e);
 		E ++;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Iterable<Integer> adj(int v) {
+	public Iterable<E> adj(int v) {
 		if(v >= V() || v < 0)
 			throw new IndexOutOfBoundsException(v+"");
-		return adjList[v];
+		return (Iterable<E>)adjList[v].clone();
 	}
 	
 	@Override
@@ -48,8 +50,8 @@ public class DirectedGraph implements Graph {
 		for (int v = 0; v < V(); v++)
 		{
 			s += v + ": ";
-			for (int w : adj(v))
-				s += w + " ";
+			for (Edge e : adj(v))
+				s += e + " ";
 			s += "\n";
 		}
 		return s;

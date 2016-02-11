@@ -9,7 +9,7 @@ public class DepthFirstSearch extends Search {
 	private int connectedCount;
 	private LinkedList<Integer> connectedVertices;
 
-	public DepthFirstSearch(Graph graph, int v) {
+	public DepthFirstSearch(Graph<?> graph, int v) {
 		super(graph, v);
 		if(graph == null)
 			throw new NullPointerException();
@@ -24,13 +24,13 @@ public class DepthFirstSearch extends Search {
 		dfs(graph, v);
 	}
 	
-	private void dfs(Graph graph, int v){
+	private void dfs(Graph<?> graph, int v){
 		connectedCount ++;
 		connectedVertices.add(v);
-		for(int w: graph.adj(v)){
-			if(edgeTo[w] != -1) continue;
-			edgeTo[w] = v;
-			dfs(graph, w);
+		for(Edge e: graph.adj(v)){
+			if(edgeTo[e.w] != -1) continue;
+			edgeTo[e.w] = v;
+			dfs(graph, e.w);
 		}
 	}
 

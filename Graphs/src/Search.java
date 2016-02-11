@@ -1,7 +1,7 @@
 
 public abstract class Search {
 	
-	public Search(Graph graph, int v){}
+	public Search(Graph<?> graph, int v){}
 	
 	public abstract boolean isConnected(int w);
 	

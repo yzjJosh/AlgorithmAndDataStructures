@@ -5,18 +5,18 @@ import junit.framework.TestCase;
 
 public abstract class SearchTest extends TestCase {
 	
-	protected abstract Search getSearch(Graph g, int v);
+	protected abstract Search getSearch(Graph<Edge> g, int v);
 	
 	public void testDirectedGraph(){
 		System.out.println("Testing directed graph ...");
-		Graph g = new DirectedGraph(6);
-		g.addEdge(0, 1);
-		g.addEdge(1, 4);
-		g.addEdge(4, 5);
-		g.addEdge(2, 1);
-		g.addEdge(2, 4);
-		g.addEdge(3, 2);
-		g.addEdge(3, 4);
+		Graph<Edge> g = new DirectedGraph<Edge>(6);
+		g.addEdge(new Edge(0, 1));
+		g.addEdge(new Edge(1, 4));
+		g.addEdge(new Edge(4, 5));
+		g.addEdge(new Edge(2, 1));
+		g.addEdge(new Edge(2, 4));
+		g.addEdge(new Edge(3, 2));
+		g.addEdge(new Edge(3, 4));
 		System.out.println("Graph is "+g);
 		Search search = getSearch(g, 0);
 		assertEquals(4, search.connectedCount());
@@ -41,13 +41,13 @@ public abstract class SearchTest extends TestCase {
 	
 	public void testUndirectedGraph(){
 		System.out.println("Testing undirected graph ...");
-		Graph g = new UndirectedGraph(7);
-		g.addEdge(0, 1);
-		g.addEdge(1, 4);
-		g.addEdge(4, 5);
-		g.addEdge(2, 4);
-		g.addEdge(3, 2);
-		g.addEdge(3, 4);
+		Graph<Edge> g = new UndirectedGraph<Edge>(7);
+		g.addEdge(new Edge(0, 1));
+		g.addEdge(new Edge(1, 4));
+		g.addEdge(new Edge(4, 5));
+		g.addEdge(new Edge(2, 4));
+		g.addEdge(new Edge(3, 2));
+		g.addEdge(new Edge(3, 4));
 		System.out.println("Graph is "+g);
 		Search search = getSearch(g, 0);
 		assertEquals(6, search.connectedCount());
