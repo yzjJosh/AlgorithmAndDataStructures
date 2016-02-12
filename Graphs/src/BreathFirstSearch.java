@@ -1,6 +1,5 @@
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class BreathFirstSearch implements Search {
 

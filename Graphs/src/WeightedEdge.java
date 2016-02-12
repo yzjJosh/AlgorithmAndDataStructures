@@ -10,7 +10,7 @@ public class WeightedEdge extends Edge implements Comparable<WeightedEdge>{
 	}
 	
 	@Override
-	public Edge revert(){
+	public WeightedEdge revert(){
 		return new WeightedEdge(w, v, weight);
 	}
 
@@ -19,6 +19,11 @@ public class WeightedEdge extends Edge implements Comparable<WeightedEdge>{
 		if(Math.abs(weight - o.weight) <= EPSILON ) return 0;
 		else if(weight > o.weight) return 1;
 		else return -1;
+	}
+	
+	@Override
+	public String toString(){
+		return super.toString()+"("+weight+")";
 	}
 
 }
