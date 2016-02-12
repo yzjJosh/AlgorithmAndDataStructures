@@ -18,18 +18,25 @@ public class BFShortestPathFinder implements ShortestPathFinder {
 		Arrays.fill(disTo, Double.POSITIVE_INFINITY);
 		edgeTo[v] = v;
 		disTo[v] = 0.0;
+		boolean[] inQ = new boolean[graph.V()];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		queue.add(v);
-		while(!queue.isEmpty())
-			relax(graph, queue.pollFirst(), queue);
+		inQ[v] = true;
+		while(!queue.isEmpty()){
+			inQ[queue.peekFirst()] = false;
+			relax(graph, queue.pollFirst(), queue, inQ);
+		}
 	}
 	
-	private void relax(DirectedGraph<? extends WeightedEdge> graph, int v, List<Integer> queue){
+	private void relax(DirectedGraph<? extends WeightedEdge> graph, int v, List<Integer> queue, boolean[] inQ){
 		for(WeightedEdge e: graph.adj(v))
 			if(disTo[e.w] > disTo[v]+e.weight){
 				disTo[e.w] = disTo[v]+e.weight;
 				edgeTo[e.w] = v;
-				queue.add(e.w);
+				if(!inQ[e.w]){
+					queue.add(e.w);
+					inQ[e.w] = true;
+				}
 			}
 	}
 	

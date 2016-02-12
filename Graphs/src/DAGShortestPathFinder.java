@@ -9,7 +9,7 @@ public class DAGShortestPathFinder implements ShortestPathFinder{
 	public DAGShortestPathFinder(DirectedGraph<? extends WeightedEdge> graph, int v){
 		if(graph == null)
 			throw new NullPointerException();
-		if(new CircleFinder(graph).hasCircle())
+		if(new DFSCircleFinder(graph).hasCircle())
 			throw new IllegalArgumentException("Graph is not DAG!");
 		if(v >= graph.V() || v < 0)
 			throw new IndexOutOfBoundsException(v+"");

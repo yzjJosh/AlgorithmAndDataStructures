@@ -27,7 +27,7 @@ public class DAGLPTest {
 		g.addEdge(new WeightedEdge(0, 2, 1.5));
 		g.addEdge(new WeightedEdge(2, 1, -2.0));
 		g.addEdge(new WeightedEdge(1, 3, 0.4));
-		DAGLongestPathFinder f = new DAGLongestPathFinder(g, 0);
+		LongestPathFinder f = new DAGLongestPathFinder(g, 0);
 		assertEquals(0.0, f.distanceTo(0), EPSILON);
 		assertEquals(0.3, f.distanceTo(1), EPSILON);
 		assertEquals(1.5, f.distanceTo(2), EPSILON);
@@ -50,7 +50,7 @@ public class DAGLPTest {
 	
 	@Test public void test2(){
 		DirectedGraph<WeightedEdge> g = new DirectedGraph<WeightedEdge>(2);
-		DAGLongestPathFinder f = new DAGLongestPathFinder(g, 0);
+		LongestPathFinder f = new DAGLongestPathFinder(g, 0);
 		assertEquals(0.0, f.distanceTo(0), EPSILON);
 		assertEquals(Double.POSITIVE_INFINITY, f.distanceTo(1), EPSILON);
 		LinkedList<Integer> path = new LinkedList<Integer>();

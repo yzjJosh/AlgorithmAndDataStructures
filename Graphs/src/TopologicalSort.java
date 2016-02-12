@@ -7,7 +7,7 @@ public class TopologicalSort {
 	public TopologicalSort(DirectedGraph<?> graph){
 		if(graph == null)
 			throw new NullPointerException();
-		if(new CircleFinder(graph).hasCircle())
+		if(new DFSCircleFinder(graph).hasCircle())
 			throw new IllegalArgumentException("Graph is not a DAG!");
 		order = new LinkedList<Integer>();
 		boolean[] visited = new boolean[graph.V()];
