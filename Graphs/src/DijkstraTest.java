@@ -71,4 +71,18 @@ public class DijkstraTest {
 		for(int i=0; i<g.V(); i++)
 			assertTrue(f.hasPathTo(i));
 	}
+	
+	@Test public void test2(){
+		DirectedGraph<WeightedEdge> g = new DirectedGraph<WeightedEdge>(2);
+		DAGShortestPathFinder f = new DAGShortestPathFinder(g, 0);
+		assertEquals(0.0, f.distanceTo(0), EPSILON);
+		assertEquals(Double.POSITIVE_INFINITY, f.distanceTo(1), EPSILON);
+		LinkedList<Integer> path = new LinkedList<Integer>();
+		path.add(0);
+		assertEquals(path, f.pathTo(0));
+		path.clear();
+		assertEquals(path, f.pathTo(1));
+		assertTrue(f.hasPathTo(0));
+		assertFalse(f.hasPathTo(1));
+	}
 }

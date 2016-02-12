@@ -2,9 +2,9 @@ import java.util.*;
 
 public class DAGShortestPathFinder implements ShortestPathFinder{
 	
-	private int v;
-	private int[] edgeTo;
-	private double[] disTo;
+	private final int v;
+	private final int[] edgeTo;
+	private final double[] disTo;
 	
 	public DAGShortestPathFinder(DirectedGraph<? extends WeightedEdge> graph, int v){
 		if(graph == null)
