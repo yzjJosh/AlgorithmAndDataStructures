@@ -8,7 +8,7 @@ public class CircleFinderTest {
 	
 	@Test public void test0(){
 		DirectedGraph<Edge> g = new DirectedGraph<Edge>(7);
-		DFSCircleFinder finder = new DFSCircleFinder(g);
+		CircleFinder finder = new DFSCircleFinder(g);
 		assertFalse(finder.hasCircle());
 		assertTrue(((List<Integer>)finder.circle()).isEmpty());
 		g.addEdge(new Edge(1, 0));
@@ -28,7 +28,7 @@ public class CircleFinderTest {
 	@Test public void test1(){
 		DirectedGraph<Edge> g = new DirectedGraph<Edge>(3);
 		g.addEdge(new Edge(2, 2));
-		DFSCircleFinder finder = new DFSCircleFinder(g);
+		CircleFinder finder = new DFSCircleFinder(g);
 		assertTrue(finder.hasCircle());
 		LinkedList<Integer> circle = new LinkedList<Integer>();
 		circle.addAll(Arrays.asList(new Integer[]{2, 2}));

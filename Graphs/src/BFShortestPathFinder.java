@@ -1,10 +1,12 @@
 import java.util.*;
 
-public class BFShortestPathFinder implements ShortestPathFinder {
+public class BFShortestPathFinder implements ShortestPathFinder, NegativeCircleFinder {
 	
 	private final int v;
 	private final int[] edgeTo;
 	private final double[] disTo;
+	private int cost;
+	private LinkedList<Integer> negativaCircle;
 	
 	public BFShortestPathFinder(DirectedGraph<? extends WeightedEdge> graph, int v){
 		if(graph == null)
@@ -14,15 +16,15 @@ public class BFShortestPathFinder implements ShortestPathFinder {
 		this.v = v;
 		this.edgeTo = new int[graph.V()];
 		this.disTo = new double[graph.V()];
-		Arrays.fill(edgeTo, -1);
+		this.cost = 0;
 		Arrays.fill(disTo, Double.POSITIVE_INFINITY);
-		edgeTo[v] = v;
 		disTo[v] = 0.0;
+		edgeTo[v] = -1;
 		boolean[] inQ = new boolean[graph.V()];
 		LinkedList<Integer> queue = new LinkedList<Integer>();
 		queue.add(v);
 		inQ[v] = true;
-		while(!queue.isEmpty()){
+		while(!queue.isEmpty() && !hasNegativeCircle()){
 			inQ[queue.peekFirst()] = false;
 			relax(graph, queue.pollFirst(), queue, inQ);
 		}
@@ -37,6 +39,8 @@ public class BFShortestPathFinder implements ShortestPathFinder {
 					queue.add(e.w);
 					inQ[e.w] = true;
 				}
+				if((++cost)%graph.V() == 0)
+					findNegativeCircle();
 			}
 	}
 	
@@ -45,6 +49,8 @@ public class BFShortestPathFinder implements ShortestPathFinder {
 	public Iterable<Integer> pathTo(int w) {
 		if(w >= edgeTo.length || w < 0)
 			throw new IndexOutOfBoundsException(w+"");
+		if(hasNegativeCircle())
+			throw new IllegalStateException("Negative circle found, no shortest path exists!");
 		LinkedList<Integer> ret = new LinkedList<Integer>();
 		if(!hasPathTo(w)) return ret;
 		ret.addFirst(w);
@@ -57,6 +63,8 @@ public class BFShortestPathFinder implements ShortestPathFinder {
 	public double distanceTo(int w) {
 		if(w >= edgeTo.length || w < 0)
 			throw new IndexOutOfBoundsException(w+"");
+		if(hasNegativeCircle())
+			throw new IllegalStateException("Negative circle found, no shortest path exists!");
 		return disTo[w];
 	}
 
@@ -64,7 +72,33 @@ public class BFShortestPathFinder implements ShortestPathFinder {
 	public boolean hasPathTo(int w) {
 		if(w >= edgeTo.length || w < 0)
 			throw new IndexOutOfBoundsException(w+"");
-		return edgeTo[w] >= 0;
+		if(hasNegativeCircle())
+			throw new IllegalStateException("Negative circle found, no shortest path exists!");
+		return disTo[w] != Double.POSITIVE_INFINITY;
+	}
+	
+	private void findNegativeCircle(){
+		DirectedGraph<Edge> g = new DirectedGraph<Edge>(edgeTo.length);
+		for(int i=0; i<edgeTo.length; i++){
+			if(disTo[i] == Double.POSITIVE_INFINITY) continue;
+			if(edgeTo[i] < 0) continue;
+			g.addEdge(new Edge(edgeTo[i], i));
+		}
+		CircleFinder f = new DFSCircleFinder(g);
+		if(f.hasCircle())
+			negativaCircle = (LinkedList<Integer>) f.circle();
+	}
+
+	@Override
+	public boolean hasNegativeCircle() {
+		return negativaCircle != null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Iterable<Integer> negativeCircle() {
+		if(!hasNegativeCircle()) return new LinkedList<Integer>();
+		return (Iterable<Integer>)negativaCircle.clone();
 	}
 
 }
