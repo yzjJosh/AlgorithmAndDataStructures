@@ -41,8 +41,8 @@ public class DFSCircleFinder implements CircleFinder {
 		return !circle.isEmpty();
 	}
 	
-	@SuppressWarnings("unchecked")
+
 	public Iterable<Integer> circle(){
-		return (Iterable<Integer>) circle.clone();
+		return circle;
 	}
 }

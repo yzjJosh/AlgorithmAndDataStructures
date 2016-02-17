@@ -5,7 +5,6 @@ public class DepthFirstSearch implements Search {
 	
 	private final int[] edgeTo;
 	private final int v;
-	private int connectedCount;
 	private final LinkedList<Integer> connectedVertices;
 
 	public DepthFirstSearch(Graph<?> graph, int v) {
@@ -15,7 +14,6 @@ public class DepthFirstSearch implements Search {
 			throw new IndexOutOfBoundsException(v+"");
 		this.v = v;
 		this.edgeTo = new int[graph.V()];
-		this.connectedCount = 0;
 		this.connectedVertices = new LinkedList<Integer>();
 		Arrays.fill(edgeTo, -1);
 		edgeTo[v] = v;
@@ -23,7 +21,6 @@ public class DepthFirstSearch implements Search {
 	}
 	
 	private void dfs(Graph<?> graph, int v){
-		connectedCount ++;
 		connectedVertices.add(v);
 		for(Edge e: graph.adj(v)){
 			if(edgeTo[e.w] != -1) continue;
@@ -41,14 +38,12 @@ public class DepthFirstSearch implements Search {
 
 	@Override
 	public int connectedCount() {
-		return connectedCount;
+		return connectedVertices.size();
 	}
 
 	@Override
 	public Iterable<Integer> connectedVertices() {
-		LinkedList<Integer> ret = new LinkedList<Integer>();
-		ret.addAll(connectedVertices);
-		return ret;
+		return connectedVertices;
 	}
 
 	@Override

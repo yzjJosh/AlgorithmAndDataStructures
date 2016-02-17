@@ -6,7 +6,7 @@ public class BFShortestPathFinder implements ShortestPathFinder, NegativeCircleF
 	private final int[] edgeTo;
 	private final double[] disTo;
 	private int cost;
-	private LinkedList<Integer> negativaCircle;
+	private Iterable<Integer> negativaCircle;
 	
 	public BFShortestPathFinder(DirectedGraph<? extends WeightedEdge> graph, int v){
 		if(graph == null)
@@ -86,7 +86,7 @@ public class BFShortestPathFinder implements ShortestPathFinder, NegativeCircleF
 		}
 		CircleFinder f = new DFSCircleFinder(g);
 		if(f.hasCircle())
-			negativaCircle = (LinkedList<Integer>) f.circle();
+			negativaCircle = f.circle();
 	}
 
 	@Override
@@ -94,11 +94,11 @@ public class BFShortestPathFinder implements ShortestPathFinder, NegativeCircleF
 		return negativaCircle != null;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	@Override
 	public Iterable<Integer> negativeCircle() {
 		if(!hasNegativeCircle()) return new LinkedList<Integer>();
-		return (Iterable<Integer>)negativaCircle.clone();
+		return negativaCircle;
 	}
 
 }

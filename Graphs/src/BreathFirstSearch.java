@@ -5,7 +5,6 @@ public class BreathFirstSearch implements Search {
 
 	private final int[] edgeTo;
 	private final int v;
-	private int connectedCount;
 	private final LinkedList<Integer> connectedVertices;
 	
 	public BreathFirstSearch(Graph<?> graph, int v) {
@@ -15,7 +14,6 @@ public class BreathFirstSearch implements Search {
 			throw new IndexOutOfBoundsException(v+"");
 		this.v = v;
 		this.edgeTo = new int[graph.V()];
-		this.connectedCount = 0;
 		this.connectedVertices = new LinkedList<Integer>();
 		Arrays.fill(edgeTo, -1);
 		edgeTo[v] = v;
@@ -23,7 +21,6 @@ public class BreathFirstSearch implements Search {
 		queue.add(v);
 		while(!queue.isEmpty()){
 			int w = queue.pollFirst();
-			connectedCount ++;
 			connectedVertices.add(w);
 			for(Edge e: graph.adj(w)){
 				if(edgeTo[e.w] != -1) continue;
@@ -42,14 +39,12 @@ public class BreathFirstSearch implements Search {
 
 	@Override
 	public int connectedCount() {
-		return connectedCount;
+		return connectedVertices.size();
 	}
 
 	@Override
 	public Iterable<Integer> connectedVertices() {
-		LinkedList<Integer> ret = new LinkedList<Integer>();
-		ret.addAll(connectedVertices);
-		return ret;
+		return connectedVertices;
 	}
 
 	@Override

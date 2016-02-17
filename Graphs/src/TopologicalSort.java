@@ -23,8 +23,7 @@ public class TopologicalSort {
 		order.addFirst(n);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Iterable<Integer> getOrder(){
-		return (Iterable<Integer>) order.clone();
+		return order;
 	}
 }

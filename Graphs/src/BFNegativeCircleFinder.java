@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class BFNegativeCircleFinder implements NegativeCircleFinder{
 	
-	private LinkedList<Integer> negativeCircle;
+	private Iterable<Integer> negativeCircle;
 	
 	public BFNegativeCircleFinder(DirectedGraph<WeightedEdge> graph){
 		if(graph == null)
@@ -12,7 +12,7 @@ public class BFNegativeCircleFinder implements NegativeCircleFinder{
 			if(visited[i]) continue;
 			BFShortestPathFinder f = new BFShortestPathFinder(graph, i);
 			if(f.hasNegativeCircle()){
-				negativeCircle = (LinkedList<Integer>) f.negativeCircle();
+				negativeCircle = f.negativeCircle();
 				break;
 			}
 			for(int v: new DepthFirstSearch(graph, i).connectedVertices())
@@ -25,11 +25,10 @@ public class BFNegativeCircleFinder implements NegativeCircleFinder{
 		return negativeCircle != null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Iterable<Integer> negativeCircle() {
 		if(!hasNegativeCircle()) return new LinkedList<Integer>();
-		return (Iterable<Integer>) negativeCircle.clone();
+		return negativeCircle;
 	}
 
 }
