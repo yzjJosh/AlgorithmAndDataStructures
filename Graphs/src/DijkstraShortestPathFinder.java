@@ -21,13 +21,14 @@ public class DijkstraShortestPathFinder implements ShortestPathFinder {
 		Arrays.fill(edgeTo, -1);
 		disTo[v] = 0.0;
 		edgeTo[v] = v;
-		double[] heap = new double[graph.V()+1];
-		int[] key = new int[graph.V()+1];
-		int[] index = new int[graph.V()];
-		int size = 0;
-		size = updateKey(heap, key, index, v, 0.0, size);
-		while(size > 0)
-			size = relax(graph, poll(heap, key, index, size--), heap, key, index, size);
+		IndexedPriorityQueue<Integer, Double> pq = new IndexedPriorityQueue<Integer, Double>(true);
+		pq.put(v, 0.0);
+		while(!pq.isEmpty()){
+			int next = pq.peekKey();
+			pq.poll();
+			relax(graph, next, pq);
+		}
+			
 	}
 
 	@Override
@@ -56,81 +57,12 @@ public class DijkstraShortestPathFinder implements ShortestPathFinder {
 		return edgeTo[w] >= 0;
 	}
 	
-	private int relax(Graph<? extends WeightedEdge> graph, int v, double[] heap, int[] key, int[] index, int size){
+	private void relax(Graph<? extends WeightedEdge> graph, int v, IndexedPriorityQueue<Integer, Double> pq){
 		for(WeightedEdge e: graph.adj(v))
 			if(disTo[e.w] > disTo[v]+e.weight){
-				size = updateKey(heap, key, index, e.w, disTo[v]+e.weight, size);
+				pq.put(e.w, disTo[v]+e.weight);
 				disTo[e.w] = disTo[v] + e.weight;
 				edgeTo[e.w] = v;
 			}
-		return size;
-	}
-	
-	private void swap(double[] heap, int[] key, int[] index, int i, int j){
-		double val = heap[i];
-		int temp = key[i];
-		heap[i] = heap[j];
-		key[i] = key[j];
-		heap[j] = val;
-		key[j] = temp;
-		index[key[i]] = i;
-		index[key[j]] = j;
-	}
-	
-	private int parent(int n){
-		return n/2;
-	}
-	
-	private int left(int n){
-		return n*2;
-	}
-	
-	private int right(int n){
-		return left(n) + 1;
-	}
-	
-	private void swim(int n, double[] heap, int[] key, int[] index) {
-		while(n > 1){
-			int parent = parent(n);
-			if(heap[parent] > heap[n]){
-				swap(heap, key, index, n, parent);
-				n = parent;
-			}else
-				break;
-		}
-	}
-	
-	private void sink(int n, double[] heap, int[] key, int[] index, int size){
-		while(n <= size){
-			int left = left(n);
-			int right = right(n);
-			double lvalue = left<=size? heap[left]: Double.POSITIVE_INFINITY;
-			double rvalue = right<=size? heap[right]: Double.POSITIVE_INFINITY;
-			if(heap[n]<=lvalue && heap[n]<=rvalue) break;
-			else if(lvalue<rvalue) {
-				swap(heap, key, index, n, left);
-				n = left;
-			} else {
-				swap(heap, key, index, n, right);
-				n = right;
-			}
-		}
-	}
-	
-	private int poll(double[] heap, int[] key, int[] index, int size){
-		swap(heap, key, index, size, 1);
-		sink(1, heap, key, index, size-1);
-		index[key[size]] = 0;
-		return key[size];
-	}
-	
-	private int updateKey(double[] heap, int[] key, int[] index, int k, double v, int size) {
-		if(index[k] == 0){
-			index[k] = ++size;
-			key[size] = k;
-		}
-		heap[index[k]] = v;
-		swim(index[k], heap, key, index);
-		return size;
 	}
 }

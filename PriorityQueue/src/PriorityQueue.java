@@ -8,7 +8,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 	private final static double thresholdLow = 0.25;
 	private boolean min;
 	private int size;
-	private Object[] heap;
+	Object[] heap;
 	
 	public PriorityQueue(boolean min){
 		this.min = min;
@@ -41,12 +41,16 @@ public class PriorityQueue<T extends Comparable<T>> {
 	
 	public T poll(){
 		T ret = (T)heap[1];
-		heap[1] = heap[size];
+		exchange(1, size);
 		heap[size--] = null;
 		sink(1);
 		if(size <= heap.length*thresholdLow && heap.length > initialSize)
 			resize(heap.length/2);
 		return ret;
+	}
+	
+	public T peek(){
+		return (T)heap[1];
 	}
 	
 	public boolean isEmpty(){
@@ -65,43 +69,12 @@ public class PriorityQueue<T extends Comparable<T>> {
 		return left(index)+1;
 	}
 	
-	private void exchange(int i, int j){
-		if(i > size || j > size) return;
-		T temp = (T)heap[i];
-		heap[i] = heap[j];
-		heap[j] = temp;
-	}
-	
-	private void sink(int index){
-		while(index <= size){
-			T node = (T)heap[index];
-			T left = left(index)<=size? (T)heap[left(index)]: null;
-			T right = right(index)<=size? (T)heap[right(index)]: null;
-			if(hasPriorityOver(node, left) && hasPriorityOver(node, right)) break;
-			if(hasPriorityOver(left, right)){
-				exchange(left(index), index);
-				index = left(index);
-			}else {
-				exchange(right(index), index);
-				index = right(index);
-			}
-		}
-	}
-	
 	private boolean hasPriorityOver(T a, T b){
 		if(a == null && b == null) return false;
 		if(a == null) return false;
 		if(b == null) return true;
 		if(min) return a.compareTo(b) < 0;
 		else return a.compareTo(b) > 0;
-	}
-	
-	private void swim(int index){
-		if(index > size) return;
-		while(index > 1 && hasPriorityOver((T)heap[index], (T)heap[parent(index)])){
-			exchange(index, parent(index));
-			index = parent(index);
-		}
 	}
 	
 	private void heapify(int index){
@@ -117,6 +90,37 @@ public class PriorityQueue<T extends Comparable<T>> {
 		for(int i=1; i<=size; i++)
 			aux[i] = heap[i];
 		heap = aux;
+	}
+	
+	protected void exchange(int i, int j){
+		if(i > size || j > size) return;
+		T temp = (T)heap[i];
+		heap[i] = heap[j];
+		heap[j] = temp;
+	}
+	
+	void sink(int index){
+		while(index <= size){
+			T node = (T)heap[index];
+			T left = left(index)<=size? (T)heap[left(index)]: null;
+			T right = right(index)<=size? (T)heap[right(index)]: null;
+			if(hasPriorityOver(node, left) && hasPriorityOver(node, right)) break;
+			if(hasPriorityOver(left, right)){
+				exchange(left(index), index);
+				index = left(index);
+			}else {
+				exchange(right(index), index);
+				index = right(index);
+			}
+		}
+	}
+	
+	void swim(int index){
+		if(index > size) return;
+		while(index > 1 && hasPriorityOver((T)heap[index], (T)heap[parent(index)])){
+			exchange(index, parent(index));
+			index = parent(index);
+		}
 	}
 	
 	public static void main(String[] args){

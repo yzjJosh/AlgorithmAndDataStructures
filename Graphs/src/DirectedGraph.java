@@ -53,8 +53,7 @@ public class DirectedGraph<E extends Edge> implements Graph<E> {
 	@Override
 	public String toString(){
 		String s = V() + " vertices, " + E() + " edges\n";
-		for (int v = 0; v < V(); v++)
-		{
+		for (int v = 0; v < V(); v++){
 			s += v + ": ";
 			for (Edge e : adj(v))
 				s += e + " ";
