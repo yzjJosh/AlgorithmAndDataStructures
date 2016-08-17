@@ -8,11 +8,15 @@ public class DijkstraTest {
 	
 	private final static double EPSILON = 0.001;
 	
+	protected ShortestPathFinder getShortestPathFinder(DirectedGraph<? extends WeightedEdge> g, int v) {
+	    return new DijkstraShortestPathFinder(g, v);
+	}
+	
 	@Test public void test0(){
 		DirectedGraph<WeightedEdge> g = new DirectedGraph<WeightedEdge>(2);
 		g.addEdge(new WeightedEdge(0, 1, -2.0));
 		try{
-			new DijkstraShortestPathFinder(g, 0);
+		    getShortestPathFinder(g, 0);
 			assertTrue(false);
 		}catch(IllegalArgumentException e){}
 	}
@@ -35,7 +39,7 @@ public class DijkstraTest {
 		g.addEdge(new WeightedEdge(3, 6, 0.52));
 		g.addEdge(new WeightedEdge(6, 0, 0.58));
 		g.addEdge(new WeightedEdge(6, 4, 0.93));
-		ShortestPathFinder f = new DijkstraShortestPathFinder(g, 0);
+		ShortestPathFinder f = getShortestPathFinder(g, 0);
 		assertEquals(0.0, f.distanceTo(0), EPSILON);
 		assertEquals(1.05, f.distanceTo(1), EPSILON);
 		assertEquals(0.26, f.distanceTo(2), EPSILON);
@@ -74,7 +78,7 @@ public class DijkstraTest {
 	
 	@Test public void test2(){
 		DirectedGraph<WeightedEdge> g = new DirectedGraph<WeightedEdge>(2);
-		DAGShortestPathFinder f = new DAGShortestPathFinder(g, 0);
+		ShortestPathFinder f = getShortestPathFinder(g, 0);
 		assertEquals(0.0, f.distanceTo(0), EPSILON);
 		assertEquals(Double.POSITIVE_INFINITY, f.distanceTo(1), EPSILON);
 		LinkedList<Integer> path = new LinkedList<Integer>();
