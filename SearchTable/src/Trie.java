@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 
 @SuppressWarnings("unchecked")
-public class Trie<V> extends StringSymbolTable<V> {
+public class Trie<V> implements StringSymbolTable<V> {
 
 	private TrieNode root;
 	private int size;

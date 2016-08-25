@@ -1,6 +1,6 @@
 
-public abstract class Sort<T extends Comparable<T>> {
+public interface Sort<T extends Comparable<T>> {
 
-	public abstract void sort(T[] array);
+	public void sort(T[] array);
 	
 }

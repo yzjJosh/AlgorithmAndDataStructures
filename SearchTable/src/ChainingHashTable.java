@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 
 @SuppressWarnings("unchecked")
-public class ChainingHashTable<K, V> extends SymbolTable<K, V> {
+public class ChainingHashTable<K, V> implements SymbolTable<K, V> {
 
 	private final static int initialSize = 16;
 	private final static double thresholdHigh = 0.75;

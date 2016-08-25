@@ -1,20 +1,20 @@
 
-public abstract class OrderedSymbolTable<K extends Comparable<K>, V> extends SymbolTable<K, V> {
+public interface OrderedSymbolTable<K extends Comparable<K>, V> extends SymbolTable<K, V> {
 
-	public abstract K min();
+	public K min();
 	
-	public abstract K max();
+	public K max();
 	
-	public abstract K floor(K key);
+	public K floor(K key);
 	
-	public abstract K ceiling(K key);
+	public K ceiling(K key);
 	
-	public abstract int rank(K key);
+	public int rank(K key);
 	
-	public abstract K select(int rank);
+	public K select(int rank);
 	
-	public abstract int size(K lo, K hi);
+	public int size(K lo, K hi);
 	
-	public abstract Iterable<K> keys(K lo, K hi);
+	public Iterable<K> keys(K lo, K hi);
 	
 }

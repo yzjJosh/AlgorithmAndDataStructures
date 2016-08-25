@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 
 @SuppressWarnings("unchecked")
-public class BinarySearchTree<K extends Comparable<K>, V> extends OrderedSymbolTable<K, V> {
+public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymbolTable<K, V> {
 	
 	protected Node root;
 	

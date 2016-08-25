@@ -1,5 +1,5 @@
 
-public class RadixSort extends Sort<String> {
+public class RadixSort implements Sort<String> {
 
 	@Override
 	public void sort(String[] array) {

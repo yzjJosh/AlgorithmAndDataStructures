@@ -1,18 +1,18 @@
 
-public abstract class SymbolTable<K, V> {
+public interface SymbolTable<K, V> {
 
-	public abstract void put(K key, V value);
+	public void put(K key, V value);
 	
-	public abstract V get(K key);
+	public V get(K key);
 	
-	public abstract V remove(K key);
+	public V remove(K key);
 	
-	public abstract boolean contains(K key);
+	public boolean contains(K key);
 	
-	public abstract boolean isEmpty();
+	public boolean isEmpty();
 	
-	public abstract int size();
+	public int size();
 	
-	public abstract Iterable<K> keys();
+	public Iterable<K> keys();
 	
 }

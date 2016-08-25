@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 
 @SuppressWarnings("unchecked")
-public class TernarySearchTrie<V> extends StringSymbolTable<V> {
+public class TernarySearchTrie<V> implements StringSymbolTable<V> {
 	
 	private Node root;
 	private int size;

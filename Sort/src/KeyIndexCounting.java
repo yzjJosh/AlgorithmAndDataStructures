@@ -1,5 +1,5 @@
 
-public class KeyIndexCounting extends Sort<Character> {
+public class KeyIndexCounting implements Sort<Character> {
 
 	@Override
 	public void sort(Character[] array) {

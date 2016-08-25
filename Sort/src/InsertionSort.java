@@ -1,5 +1,5 @@
 
-public class InsertionSort<T extends Comparable<T>> extends Sort<T> {
+public class InsertionSort<T extends Comparable<T>> implements Sort<T> {
 
 	@Override
 	public void sort(T[] array) {

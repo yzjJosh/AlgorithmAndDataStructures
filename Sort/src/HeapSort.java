@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class HeapSort<T extends Comparable<T>> extends Sort<T> {
+public class HeapSort<T extends Comparable<T>> implements Sort<T> {
 
 	@Override
 	public void sort(T[] array) {

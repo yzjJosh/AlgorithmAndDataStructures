@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class BucketSort extends Sort<Integer>{
+public class BucketSort implements Sort<Integer>{
 
 	@SuppressWarnings("unchecked")
 	@Override
