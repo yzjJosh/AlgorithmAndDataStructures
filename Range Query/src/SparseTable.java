@@ -48,10 +48,11 @@ public class SparseTable<T> implements RangeQuery<T> {
         lo = Math.max(lo, this.lo);
         hi = Math.min(hi, this.hi);
         T res = null;
-        while(lo <= hi) {
-            int log = logFloor(hi-lo+1);
-            res = op.apply(res, (T)table[lo][log]);
-            lo += 1<<log;
+        for(int i = logFloor(hi-lo+1); i>=0; i--) {
+            if(lo + (1<<i) <= hi+1) {
+                res = op.apply(res, (T)table[lo][i]);
+                lo += 1<<i;
+            }
         }
         return res;
     }
