@@ -1,14 +1,15 @@
 import lombok.Getter;
 import lombok.NonNull;
 
-public class SegmentTree<T> {
+public class SegmentTree<T> implements MutableRangeQuery<T> {
     
-    private final Operation<T> op;
     private final Node root;
     @Getter
     private final int lo;
     @Getter
     private final int hi;
+    @Getter
+    private final Operation<T> op;
     
     public SegmentTree(@NonNull Operation<T> op, int n) {
         this(op, 0, n-1);
@@ -47,10 +48,12 @@ public class SegmentTree<T> {
         return res;
     }
     
+    @Override
     public T get(int i) {
         return get(i, i);
     }
     
+    @Override
     public T get(int lo, int hi) {
         return get(root, this.lo, this.hi, lo, hi);
     }
@@ -66,6 +69,7 @@ public class SegmentTree<T> {
         }
     }
     
+    @Override
     public void update(int i, T value) {
         update(root, lo, hi, i, value);
     }
